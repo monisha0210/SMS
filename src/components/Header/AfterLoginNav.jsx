@@ -1,0 +1,157 @@
+// src/components/Header/AfterLoginNav.jsx
+import React from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import './Header.css';
+
+const AfterLoginNav = ({ userRole, onLogout, isMobile, closeMobileMenu }) => {
+  const navigate = useNavigate();
+
+  const handleClick = () => {
+    if (isMobile && closeMobileMenu) {
+      closeMobileMenu();
+    }
+  };
+
+  const handleLogout = () => {
+    onLogout();
+    navigate('/login');
+    if (isMobile && closeMobileMenu) {
+      closeMobileMenu();
+    }
+  };
+
+  // Navigation items based on user role
+  const getNavItems = () => {
+    const commonItems = [
+      { name: 'Dashboard', path: '/dashboard', icon: 'dashboard' }
+    ];
+
+    const hrItems = [
+      ...commonItems,
+      { name: 'Interns', path: '/interns', icon: 'users' },
+      { name: 'Mentors', path: '/mentors', icon: 'userCheck' },
+      { name: 'Attendance', path: '/attendance', icon: 'calendar' },
+      { name: 'Tasks', path: '/tasks', icon: 'clipboard' },
+      { name: 'Projects', path: '/projects', icon: 'folder' },
+      { name: 'Reports', path: '/reports', icon: 'fileText' },
+      { name: 'Settings', path: '/settings', icon: 'settings' }
+    ];
+
+    const mentorItems = [
+      ...commonItems,
+      { name: 'Interns', path: '/interns', icon: 'users' },
+      { name: 'Tasks', path: '/tasks', icon: 'clipboard' },
+      { name: 'Projects', path: '/projects', icon: 'folder' },
+      { name: 'Reports', path: '/reports', icon: 'fileText' },
+      { name: 'Settings', path: '/settings', icon: 'settings' }
+    ];
+
+    const internItems = [
+      ...commonItems,
+      { name: 'My Tasks', path: '/tasks', icon: 'clipboard' },
+      { name: 'Attendance', path: '/attendance', icon: 'calendar' },
+      { name: 'Reports', path: '/reports', icon: 'fileText' },
+      { name: 'Settings', path: '/settings', icon: 'settings' }
+    ];
+
+    switch(userRole) {
+      case 'hr':
+        return hrItems;
+      case 'mentor':
+        return mentorItems;
+      case 'intern':
+        return internItems;
+      default:
+        return commonItems;
+    }
+  };
+
+  const navItems = getNavItems();
+
+  return (
+    <>
+      <ul className={`nav-list ${isMobile ? 'mobile' : ''}`}>
+        {navItems.map((item) => (
+          <li key={item.name} className="nav-item">
+            <Link 
+              to={item.path} 
+              className="nav-link"
+              onClick={handleClick}
+            >
+              {isMobile && (
+                <span className="nav-icon">
+                  {getIcon(item.icon)}
+                </span>
+              )}
+              {item.name}
+            </Link>
+          </li>
+        ))}
+      </ul>
+      
+      {/* Logout Button */}
+      <button 
+        className="logout-btn"
+        onClick={handleLogout}
+        aria-label="Logout"
+      >
+        <span className="nav-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+          </svg>
+        </span>
+        {isMobile && <span>Logout</span>}
+      </button>
+    </>
+  );
+};
+
+// Icon helper function
+const getIcon = (iconName) => {
+  const icons = {
+    dashboard: (
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+      </svg>
+    ),
+    users: (
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
+      </svg>
+    ),
+    userCheck: (
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+      </svg>
+    ),
+    calendar: (
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+      </svg>
+    ),
+    clipboard: (
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+      </svg>
+    ),
+    folder: (
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z" />
+      </svg>
+    ),
+    fileText: (
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+      </svg>
+    ),
+    settings: (
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+      </svg>
+    )
+  };
+  return icons[iconName];
+};
+
+export default AfterLoginNav;
