@@ -150,15 +150,7 @@ const Login = ({ onLogin }) => {
           <p>Don't have an account? <a href="#">Contact HR</a></p>
         </div>
 
-        <div className="demo-credentials">
-          <p className="demo-title">Demo Credentials:</p>
-          <div className="demo-list">
-            <div><strong>HR:</strong> hr@example.com</div>
-            <div><strong>Mentor:</strong> mentor@example.com</div>
-            <div><strong>Intern:</strong> intern@example.com</div>
-            <div><strong>Password:</strong> Any password</div>
-          </div>
-        </div>
+        
       </div>
     </div>
   );

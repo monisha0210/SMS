@@ -93,7 +93,7 @@ const Contact = () => {
               </div>
               <div>
                 <h4>Business Hours</h4>
-                <p>Monday - Friday: 9:00 AM - 6:00 PM<br />Saturday - Sunday: Closed</p>
+                <p>Monday - Saturday: 9:00 AM - 6:00 PM<br />Sunday: Closed</p>
               </div>
             </div>
           </div>
