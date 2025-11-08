@@ -1,605 +1,988 @@
 import React, { useState } from 'react';
+import {
+  FiUser, FiEdit2, FiTrash2, FiEye, FiPlus, FiSearch, FiFilter,
+  FiMail, FiPhone, FiCalendar, FiMapPin, FiFileText, FiUpload,
+  FiCheckCircle, FiClock, FiAlertCircle, FiTarget, FiBriefcase
+} from 'react-icons/fi';
 import './Interns.css';
 
-const Interns = ({ userRole }) => {
+const Interns = ({ userRole = 'hr' }) => {
+  // User role can be 'hr', 'mentor', or 'intern'
+  
   const [interns, setInterns] = useState([
     {
       id: 1,
-      name: 'John Doe',
-      email: 'john.doe@example.com',
-      phone: '+1 234-567-8900',
-      domain: 'Web Development',
-      mentor: 'Sarah Wilson',
-      startDate: '2025-09-01',
-      endDate: '2025-12-01',
-      status: 'Active',
+      name: "John Doe",
+      internId: "INT-2025-001",
+      email: "john.doe@email.com",
+      phone: "+91 9876543210",
+      department: "Software Development",
+      domain: "Full Stack Development",
+      college: "MIT University",
+      degree: "B.Tech Computer Science",
+      year: "3rd Year",
+      cgpa: "8.5",
+      startDate: "2025-01-15",
+      endDate: "2025-04-15",
+      duration: "3 months",
+      mentor: "Dr. Sarah Johnson",
+      mentorId: 1,
+      project: "E-Commerce Platform",
+      status: "Active",
       attendance: 92,
       tasksCompleted: 15,
-      totalTasks: 20,
-      college: 'MIT',
-      degree: 'B.Tech CSE',
-      year: '4th Year',
-      address: '123 Main St, Boston, MA',
-      emergencyContact: '+1 234-567-8901',
+      reportsSubmitted: 24,
       documents: {
-        resume: 'john_resume.pdf',
-        offerLetter: 'john_offer.pdf',
-        idProof: 'john_id.pdf'
-      }
+        resume: "john_resume.pdf",
+        offerLetter: "john_offer.pdf",
+        idProof: "john_id.pdf"
+      },
+      address: "123 Main St, Chennai",
+      joinedDate: "2025-01-15"
     },
     {
       id: 2,
-      name: 'Jane Smith',
-      email: 'jane.smith@example.com',
-      phone: '+1 234-567-8902',
-      domain: 'Data Science',
-      mentor: 'Mike Johnson',
-      startDate: '2025-09-15',
-      endDate: '2025-12-15',
-      status: 'Active',
-      attendance: 88,
+      name: "Jane Smith",
+      internId: "INT-2025-002",
+      email: "jane.smith@email.com",
+      phone: "+91 9876543211",
+      department: "Design",
+      domain: "UI/UX Design",
+      college: "Design Institute",
+      degree: "B.Des",
+      year: "Final Year",
+      cgpa: "9.0",
+      startDate: "2025-02-01",
+      endDate: "2025-05-01",
+      duration: "3 months",
+      mentor: "Prof. Michael Chen",
+      mentorId: 2,
+      project: "Mobile App UI Redesign",
+      status: "Active",
+      attendance: 95,
       tasksCompleted: 12,
-      totalTasks: 18,
-      college: 'Stanford University',
-      degree: 'M.Sc Data Science',
-      year: '2nd Year',
-      address: '456 Oak Ave, Stanford, CA',
-      emergencyContact: '+1 234-567-8903',
+      reportsSubmitted: 20,
       documents: {
-        resume: 'jane_resume.pdf',
-        offerLetter: 'jane_offer.pdf',
-        idProof: 'jane_id.pdf'
-      }
+        resume: "jane_resume.pdf",
+        offerLetter: "jane_offer.pdf",
+        idProof: "jane_id.pdf"
+      },
+      address: "456 Park Ave, Mumbai",
+      joinedDate: "2025-02-01"
     },
     {
       id: 3,
-      name: 'Alex Brown',
-      email: 'alex.brown@example.com',
-      phone: '+1 234-567-8904',
-      domain: 'UI/UX Design',
-      mentor: 'Sarah Wilson',
-      startDate: '2025-08-20',
-      endDate: '2025-11-20',
-      status: 'Active',
-      attendance: 95,
+      name: "Alex Brown",
+      internId: "INT-2025-003",
+      email: "alex.brown@email.com",
+      phone: "+91 9876543212",
+      department: "Data Science",
+      domain: "Machine Learning",
+      college: "Tech University",
+      degree: "M.Tech AI/ML",
+      year: "1st Year",
+      cgpa: "8.8",
+      startDate: "2025-01-20",
+      endDate: "2025-06-20",
+      duration: "5 months",
+      mentor: "Dr. Emily Rodriguez",
+      mentorId: 3,
+      project: "Data Analytics Dashboard",
+      status: "Active",
+      attendance: 88,
       tasksCompleted: 18,
-      totalTasks: 20,
-      college: 'Design Institute',
-      degree: 'B.Des',
-      year: '3rd Year',
-      address: '789 Design Ln, NY',
-      emergencyContact: '+1 234-567-8905',
+      reportsSubmitted: 28,
       documents: {
-        resume: 'alex_resume.pdf',
-        offerLetter: 'alex_offer.pdf',
-        idProof: 'alex_id.pdf'
-      }
+        resume: "alex_resume.pdf",
+        offerLetter: "alex_offer.pdf",
+        idProof: "alex_id.pdf"
+      },
+      address: "789 Tech Park, Bangalore",
+      joinedDate: "2025-01-20"
     }
   ]);
 
+  const [tasks, setTasks] = useState([
+    {
+      id: 1,
+      title: "Design Database Schema",
+      description: "Create comprehensive database schema for the e-commerce platform",
+      internId: 1,
+      internName: "John Doe",
+      assignedBy: "Dr. Sarah Johnson",
+      project: "E-Commerce Platform",
+      priority: "High",
+      status: "In Progress",
+      deadline: "2025-11-10",
+      assignedDate: "2025-11-01",
+      completedDate: null
+    },
+    {
+      id: 2,
+      title: "Implement User Authentication",
+      description: "Build login and registration system with JWT",
+      internId: 1,
+      internName: "John Doe",
+      assignedBy: "Dr. Sarah Johnson",
+      project: "E-Commerce Platform",
+      priority: "High",
+      status: "Pending",
+      deadline: "2025-11-12",
+      assignedDate: "2025-11-02",
+      completedDate: null
+    },
+    {
+      id: 3,
+      title: "Create Wireframes",
+      description: "Design wireframes for mobile app redesign",
+      internId: 2,
+      internName: "Jane Smith",
+      assignedBy: "Prof. Michael Chen",
+      project: "Mobile App UI Redesign",
+      priority: "High",
+      status: "In Progress",
+      deadline: "2025-11-09",
+      assignedDate: "2025-11-01",
+      completedDate: null
+    },
+    {
+      id: 4,
+      title: "Data Collection",
+      description: "Collect and prepare dataset for analysis",
+      internId: 3,
+      internName: "Alex Brown",
+      assignedBy: "Dr. Emily Rodriguez",
+      project: "Data Analytics Dashboard",
+      priority: "Medium",
+      status: "Completed",
+      deadline: "2025-11-05",
+      assignedDate: "2025-10-28",
+      completedDate: "2025-11-04"
+    }
+  ]);
+
+  const [showModal, setShowModal] = useState(false);
+  const [modalMode, setModalMode] = useState('add');
+  const [selectedIntern, setSelectedIntern] = useState(null);
+  const [viewDetails, setViewDetails] = useState(null);
   const [searchTerm, setSearchTerm] = useState('');
   const [filterStatus, setFilterStatus] = useState('All');
-  const [filterDomain, setFilterDomain] = useState('All');
-  const [showAddModal, setShowAddModal] = useState(false);
-  const [showViewModal, setShowViewModal] = useState(false);
-  const [showEditModal, setShowEditModal] = useState(false);
-  const [selectedIntern, setSelectedIntern] = useState(null);
-  
+  const [showTaskModal, setShowTaskModal] = useState(false);
+  const [selectedInternForTask, setSelectedInternForTask] = useState(null);
+
   const [formData, setFormData] = useState({
     name: '',
     email: '',
     phone: '',
+    department: '',
     domain: '',
-    mentor: '',
-    startDate: '',
-    endDate: '',
     college: '',
     degree: '',
     year: '',
+    cgpa: '',
+    startDate: '',
+    endDate: '',
+    mentor: '',
+    mentorId: '',
+    project: '',
     address: '',
-    emergencyContact: '',
-    status: 'Active'
+    documents: {}
   });
 
-  const domains = ['All', 'Web Development', 'Data Science', 'UI/UX Design', 'Mobile Development', 'DevOps', 'Machine Learning'];
-  const mentors = ['Sarah Wilson', 'Mike Johnson', 'Emily Davis', 'Robert Lee', 'Chris Martin'];
+  const [taskFormData, setTaskFormData] = useState({
+    title: '',
+    description: '',
+    priority: 'Medium',
+    deadline: '',
+    project: ''
+  });
 
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
+  const mentors = [
+    { id: 1, name: "Dr. Sarah Johnson", department: "Software Development" },
+    { id: 2, name: "Prof. Michael Chen", department: "Design" },
+    { id: 3, name: "Dr. Emily Rodriguez", department: "Data Science" }
+  ];
+
+  // Get current mentor's ID (for demo, using 1)
+  const currentMentorId = userRole === 'mentor' ? 1 : null;
+  const currentInternId = userRole === 'intern' ? 1 : null;
+
+  // Filter interns based on user role
+  const getFilteredInterns = () => {
+    let filtered = interns;
+
+    if (userRole === 'mentor') {
+      filtered = filtered.filter(intern => intern.mentorId === currentMentorId);
+    }
+
+    if (searchTerm) {
+      filtered = filtered.filter(intern =>
+        intern.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        intern.internId.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        intern.email.toLowerCase().includes(searchTerm.toLowerCase())
+      );
+    }
+
+    if (filterStatus !== 'All') {
+      filtered = filtered.filter(intern => intern.status === filterStatus);
+    }
+
+    return filtered;
   };
 
-  const handleAddIntern = (e) => {
-    e.preventDefault();
-    const newIntern = {
-      id: interns.length + 1,
-      ...formData,
-      attendance: 0,
-      tasksCompleted: 0,
-      totalTasks: 0,
-      documents: {
-        resume: 'pending_upload.pdf',
-        offerLetter: 'pending_upload.pdf',
-        idProof: 'pending_upload.pdf'
-      }
-    };
-    setInterns([...interns, newIntern]);
-    setShowAddModal(false);
-    resetForm();
+  // Filter tasks based on user role
+  const getFilteredTasks = () => {
+    if (userRole === 'intern') {
+      return tasks.filter(task => task.internId === currentInternId);
+    } else if (userRole === 'mentor') {
+      return tasks.filter(task => 
+        interns.find(intern => intern.id === task.internId && intern.mentorId === currentMentorId)
+      );
+    }
+    return tasks;
   };
 
-  const handleViewIntern = (intern) => {
+  const openModal = (mode, intern = null) => {
+    setModalMode(mode);
     setSelectedIntern(intern);
-    setShowViewModal(true);
+    if (mode === 'edit' && intern) {
+      setFormData({
+        name: intern.name,
+        email: intern.email,
+        phone: intern.phone,
+        department: intern.department,
+        domain: intern.domain,
+        college: intern.college,
+        degree: intern.degree,
+        year: intern.year,
+        cgpa: intern.cgpa,
+        startDate: intern.startDate,
+        endDate: intern.endDate,
+        mentor: intern.mentor,
+        mentorId: intern.mentorId,
+        project: intern.project,
+        address: intern.address,
+        documents: intern.documents
+      });
+    } else {
+      setFormData({
+        name: '',
+        email: '',
+        phone: '',
+        department: '',
+        domain: '',
+        college: '',
+        degree: '',
+        year: '',
+        cgpa: '',
+        startDate: '',
+        endDate: '',
+        mentor: '',
+        mentorId: '',
+        project: '',
+        address: '',
+        documents: {}
+      });
+    }
+    setShowModal(true);
   };
 
-  const handleEditIntern = (intern) => {
-    setSelectedIntern(intern);
-    setFormData({
-      name: intern.name,
-      email: intern.email,
-      phone: intern.phone,
-      domain: intern.domain,
-      mentor: intern.mentor,
-      startDate: intern.startDate,
-      endDate: intern.endDate,
-      college: intern.college,
-      degree: intern.degree,
-      year: intern.year,
-      address: intern.address,
-      emergencyContact: intern.emergencyContact,
-      status: intern.status
-    });
-    setShowEditModal(true);
+  const closeModal = () => {
+    setShowModal(false);
+    setSelectedIntern(null);
   };
 
-  const handleUpdateIntern = (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-    const updatedInterns = interns.map(intern =>
-      intern.id === selectedIntern.id ? { ...intern, ...formData } : intern
-    );
-    setInterns(updatedInterns);
-    setShowEditModal(false);
-    resetForm();
+    
+    if (modalMode === 'add') {
+      const newIntern = {
+        ...formData,
+        id: Date.now(),
+        internId: `INT-2025-${String(interns.length + 1).padStart(3, '0')}`,
+        status: 'Active',
+        attendance: 0,
+        tasksCompleted: 0,
+        reportsSubmitted: 0,
+        joinedDate: formData.startDate,
+        duration: calculateDuration(formData.startDate, formData.endDate)
+      };
+      setInterns([...interns, newIntern]);
+    } else if (modalMode === 'edit') {
+      setInterns(interns.map(intern =>
+        intern.id === selectedIntern.id ? { ...intern, ...formData } : intern
+      ));
+    }
+    
+    closeModal();
   };
 
-  const handleDeleteIntern = (id) => {
+  const deleteIntern = (id) => {
     if (window.confirm('Are you sure you want to delete this intern?')) {
       setInterns(interns.filter(intern => intern.id !== id));
     }
   };
 
-  const resetForm = () => {
-    setFormData({
-      name: '',
-      email: '',
-      phone: '',
-      domain: '',
-      mentor: '',
-      startDate: '',
-      endDate: '',
-      college: '',
-      degree: '',
-      year: '',
-      address: '',
-      emergencyContact: '',
-      status: 'Active'
-    });
-    setSelectedIntern(null);
+  const calculateDuration = (start, end) => {
+    const startDate = new Date(start);
+    const endDate = new Date(end);
+    const months = Math.round((endDate - startDate) / (1000 * 60 * 60 * 24 * 30));
+    return `${months} month${months !== 1 ? 's' : ''}`;
   };
 
-  const filteredInterns = interns.filter(intern => {
-    const matchesSearch = intern.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         intern.email.toLowerCase().includes(searchTerm.toLowerCase());
-    const matchesStatus = filterStatus === 'All' || intern.status === filterStatus;
-    const matchesDomain = filterDomain === 'All' || intern.domain === filterDomain;
-    return matchesSearch && matchesStatus && matchesDomain;
-  });
+  const handleMentorChange = (e) => {
+    const mentorId = parseInt(e.target.value);
+    const mentor = mentors.find(m => m.id === mentorId);
+    if (mentor) {
+      setFormData({
+        ...formData,
+        mentorId: mentor.id,
+        mentor: mentor.name,
+        department: mentor.department
+      });
+    }
+  };
+
+  const openTaskModal = (intern) => {
+    setSelectedInternForTask(intern);
+    setTaskFormData({
+      title: '',
+      description: '',
+      priority: 'Medium',
+      deadline: '',
+      project: intern.project
+    });
+    setShowTaskModal(true);
+  };
+
+  const closeTaskModal = () => {
+    setShowTaskModal(false);
+    setSelectedInternForTask(null);
+  };
+
+  const handleTaskSubmit = (e) => {
+    e.preventDefault();
+    
+    const newTask = {
+      id: Date.now(),
+      ...taskFormData,
+      internId: selectedInternForTask.id,
+      internName: selectedInternForTask.name,
+      assignedBy: selectedInternForTask.mentor,
+      status: 'Pending',
+      assignedDate: new Date().toISOString().split('T')[0],
+      completedDate: null
+    };
+
+    setTasks([...tasks, newTask]);
+    closeTaskModal();
+  };
+
+  const updateTaskStatus = (taskId, newStatus) => {
+    setTasks(tasks.map(task =>
+      task.id === taskId
+        ? {
+            ...task,
+            status: newStatus,
+            completedDate: newStatus === 'Completed' ? new Date().toISOString().split('T')[0] : null
+          }
+        : task
+    ));
+  };
+
+  const getStatusColor = (status) => {
+    switch (status) {
+      case 'Active': return 'status-active';
+      case 'Completed': return 'status-completed';
+      case 'In Progress': return 'status-progress';
+      case 'Pending': return 'status-pending';
+      case 'Inactive': return 'status-inactive';
+      default: return 'status-pending';
+    }
+  };
+
+  const getPriorityColor = (priority) => {
+    switch (priority) {
+      case 'High': return 'priority-high';
+      case 'Medium': return 'priority-medium';
+      case 'Low': return 'priority-low';
+      default: return 'priority-medium';
+    }
+  };
+
+  const filteredInterns = getFilteredInterns();
+  const filteredTasks = getFilteredTasks();
 
   return (
-    <div className="interns-page">
-      {/* Page Header */}
-      <div className="page-header">
+    <div className="interns-container">
+      {/* Header */}
+      <div className="interns-header">
         <div className="header-content">
-          <h1 className="page-main-title">📋 Tasks Management</h1>
-          <p className="page-main-subtitle">View and manage tasks</p>
-          <p className="viewing-as">Viewing as: <span className="user-role">{userRole}</span></p>
+          <h1 className="page-title">
+            {userRole === 'hr' && '👥 Intern Management'}
+            {userRole === 'mentor' && '👥 My Assigned Interns'}
+            {userRole === 'intern' && '📋 My Tasks'}
+          </h1>
+          <p className="page-subtitle">
+            {userRole === 'hr' && 'Add, manage and track intern information'}
+            {userRole === 'mentor' && 'View and manage your assigned interns'}
+            {userRole === 'intern' && 'View and update your assigned tasks'}
+          </p>
         </div>
       </div>
 
-      {/* Content Container */}
-      <div className="content-wrapper">
-        {/* Stats Overview */}
-        <div className="stats-overview">
-          <div className="stat-card stat-blue">
-            <div className="stat-icon-wrapper">
-              <span className="stat-icon">👥</span>
+      {/* Statistics Cards */}
+      <div className="stats-grid">
+        {userRole !== 'intern' && (
+          <>
+            <div className="stat-card stat-blue">
+              <div className="stat-icon">
+                <FiUser size={28} />
+              </div>
+              <div className="stat-content">
+                <p className="stat-label">Total Interns</p>
+                <h2 className="stat-value">{filteredInterns.length}</h2>
+              </div>
             </div>
-            <div className="stat-details">
-              <p className="stat-title">Total Interns</p>
-              <h2 className="stat-number">{interns.length}</h2>
-              <span className="stat-change positive">+3 this week</span>
+            <div className="stat-card stat-green">
+              <div className="stat-icon">
+                <FiCheckCircle size={28} />
+              </div>
+              <div className="stat-content">
+                <p className="stat-label">Active Interns</p>
+                <h2 className="stat-value">
+                  {filteredInterns.filter(i => i.status === 'Active').length}
+                </h2>
+              </div>
             </div>
+          </>
+        )}
+        <div className="stat-card stat-orange">
+          <div className="stat-icon">
+            <FiTarget size={28} />
           </div>
-
-          <div className="stat-card stat-green">
-            <div className="stat-icon-wrapper">
-              <span className="stat-icon">✅</span>
-            </div>
-            <div className="stat-details">
-              <p className="stat-title">Active</p>
-              <h2 className="stat-number">{interns.filter(i => i.status === 'Active').length}</h2>
-              <span className="stat-change neutral">Currently active</span>
-            </div>
-          </div>
-
-          <div className="stat-card stat-orange">
-            <div className="stat-icon-wrapper">
-              <span className="stat-icon">⏸️</span>
-            </div>
-            <div className="stat-details">
-              <p className="stat-title">On Leave</p>
-              <h2 className="stat-number">{interns.filter(i => i.status === 'On Leave').length}</h2>
-              <span className="stat-change warning">Temporary</span>
-            </div>
-          </div>
-
-          <div className="stat-card stat-purple">
-            <div className="stat-icon-wrapper">
-              <span className="stat-icon">🎓</span>
-            </div>
-            <div className="stat-details">
-              <p className="stat-title">Completed</p>
-              <h2 className="stat-number">{interns.filter(i => i.status === 'Completed').length}</h2>
-              <span className="stat-change success">Graduated</span>
-            </div>
+          <div className="stat-content">
+            <p className="stat-label">Total Tasks</p>
+            <h2 className="stat-value">{filteredTasks.length}</h2>
           </div>
         </div>
+        <div className="stat-card stat-purple">
+          <div className="stat-icon">
+            <FiCheckCircle size={28} />
+          </div>
+          <div className="stat-content">
+            <p className="stat-label">Completed Tasks</p>
+            <h2 className="stat-value">
+              {filteredTasks.filter(t => t.status === 'Completed').length}
+            </h2>
+          </div>
+        </div>
+      </div>
 
-        {/* Filters and Actions */}
-        <div className="filters-actions-bar">
+      {/* Action Bar - Only for HR and Mentor */}
+      {userRole !== 'intern' && (
+        <div className="action-bar">
           <div className="search-filter-group">
-            <div className="search-wrapper">
-              <span className="search-icon-left">🔍</span>
+            <div className="search-box">
+              <FiSearch size={20} className="search-icon" />
               <input
                 type="text"
-                placeholder="Search by name or email..."
+                placeholder="Search interns..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="search-field"
+                className="search-input"
               />
             </div>
-            <select 
-              value={filterStatus} 
+            <select
+              value={filterStatus}
               onChange={(e) => setFilterStatus(e.target.value)}
-              className="filter-dropdown"
+              className="filter-select"
             >
               <option value="All">All Status</option>
               <option value="Active">Active</option>
-              <option value="On Leave">On Leave</option>
               <option value="Completed">Completed</option>
-            </select>
-            <select 
-              value={filterDomain} 
-              onChange={(e) => setFilterDomain(e.target.value)}
-              className="filter-dropdown"
-            >
-              {domains.map(domain => (
-                <option key={domain} value={domain}>
-                  {domain === 'All' ? 'All Domains' : domain}
-                </option>
-              ))}
+              <option value="Inactive">Inactive</option>
             </select>
           </div>
           {userRole === 'hr' && (
-            <button className="add-intern-btn" onClick={() => setShowAddModal(true)}>
-              <span className="btn-icon-add">➕</span>
+            <button onClick={() => openModal('add')} className="add-btn">
+              <FiPlus size={20} />
               Add New Intern
             </button>
           )}
         </div>
+      )}
 
-        {/* Interns Table */}
-        <div className="table-container">
-          <table className="interns-table">
-            <thead>
-              <tr>
-                <th>Intern Details</th>
-                <th>Domain</th>
-                <th>Mentor</th>
-                <th>Duration</th>
-                <th>Attendance</th>
-                <th>Progress</th>
-                <th>Status</th>
-                {userRole === 'hr' && <th>Actions</th>}
-              </tr>
-            </thead>
-            <tbody>
-              {filteredInterns.map(intern => (
-                <tr key={intern.id}>
-                  <td>
-                    <div className="intern-profile">
-                      <div className="intern-avatar-circle">{intern.name.charAt(0)}</div>
-                      <div className="intern-text-info">
-                        <p className="intern-fullname">{intern.name}</p>
-                        <p className="intern-email-text">{intern.email}</p>
-                      </div>
-                    </div>
-                  </td>
-                  <td>
-                    <span className="domain-tag">{intern.domain}</span>
-                  </td>
-                  <td className="mentor-name">{intern.mentor}</td>
-                  <td>
-                    <div className="date-range">
-                      <p className="date-line">{intern.startDate}</p>
-                      <p className="date-line">to {intern.endDate}</p>
-                    </div>
-                  </td>
-                  <td>
-                    <span className={`attendance-tag ${
-                      intern.attendance >= 90 ? 'high' : 
-                      intern.attendance >= 75 ? 'medium' : 'low'
-                    }`}>
-                      {intern.attendance}%
-                    </span>
-                  </td>
-                  <td>
-                    <div className="progress-section">
-                      <div className="progress-bar-bg">
-                        <div 
-                          className="progress-bar-fill" 
-                          style={{ width: `${(intern.tasksCompleted / intern.totalTasks) * 100}%` }}
-                        ></div>
-                      </div>
-                      <span className="progress-label">{intern.tasksCompleted}/{intern.totalTasks}</span>
-                    </div>
-                  </td>
-                  <td>
-                    <span className={`status-tag status-${intern.status.toLowerCase().replace(' ', '-')}`}>
-                      {intern.status}
-                    </span>
-                  </td>
-                  {userRole === 'hr' && (
-                    <td>
-                      <div className="action-btns-group">
-                        <button 
-                          className="action-btn-icon btn-view" 
-                          onClick={() => handleViewIntern(intern)}
-                          title="View Details"
-                        >
-                          👁️
-                        </button>
-                        <button 
-                          className="action-btn-icon btn-edit" 
-                          onClick={() => handleEditIntern(intern)}
-                          title="Edit"
-                        >
-                          ✏️
-                        </button>
-                        <button 
-                          className="action-btn-icon btn-delete" 
-                          onClick={() => handleDeleteIntern(intern.id)}
-                          title="Delete"
-                        >
-                          🗑️
-                        </button>
-                      </div>
-                    </td>
-                  )}
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      </div>
+      {/* Interns Grid/List for HR and Mentor */}
+      {userRole !== 'intern' && (
+        <div className="interns-grid">
+          {filteredInterns.map(intern => (
+            <div key={intern.id} className="intern-card">
+              <div className="intern-card-header">
+                <div className="intern-avatar">
+                  {intern.name.charAt(0)}
+                </div>
+                <div className="intern-basic-info">
+                  <h3 className="intern-name">{intern.name}</h3>
+                  <p className="intern-id">{intern.internId}</p>
+                </div>
+                <span className={`status-badge ${getStatusColor(intern.status)}`}>
+                  {intern.status}
+                </span>
+              </div>
 
-      {/* Add Modal */}
-      {showAddModal && (
-        <div className="modal-backdrop" onClick={() => setShowAddModal(false)}>
-          <div className="modal-box" onClick={(e) => e.stopPropagation()}>
-            <div className="modal-top">
-              <h2 className="modal-heading">➕ Add New Intern</h2>
-              <button className="modal-close-btn" onClick={() => setShowAddModal(false)}>✕</button>
+              <div className="intern-card-body">
+                <div className="info-row">
+                  <FiMail size={16} />
+                  <span>{intern.email}</span>
+                </div>
+                <div className="info-row">
+                  <FiPhone size={16} />
+                  <span>{intern.phone}</span>
+                </div>
+                <div className="info-row">
+                  <FiBriefcase size={16} />
+                  <span>{intern.department}</span>
+                </div>
+                <div className="info-row">
+                  <FiUser size={16} />
+                  <span>Mentor: {intern.mentor}</span>
+                </div>
+                <div className="info-row">
+                  <FiCalendar size={16} />
+                  <span>{intern.duration}</span>
+                </div>
+              </div>
+
+              <div className="intern-stats-row">
+                <div className="mini-stat">
+                  <span className="mini-stat-value">{intern.attendance}%</span>
+                  <span className="mini-stat-label">Attendance</span>
+                </div>
+                <div className="mini-stat">
+                  <span className="mini-stat-value">{intern.tasksCompleted}</span>
+                  <span className="mini-stat-label">Tasks Done</span>
+                </div>
+                <div className="mini-stat">
+                  <span className="mini-stat-value">{intern.reportsSubmitted}</span>
+                  <span className="mini-stat-label">Reports</span>
+                </div>
+              </div>
+
+              <div className="intern-card-footer">
+                <button
+                  onClick={() => setViewDetails(intern)}
+                  className="action-btn btn-view"
+                >
+                  <FiEye size={16} />
+                  View
+                </button>
+                {userRole === 'mentor' && (
+                  <button
+                    onClick={() => openTaskModal(intern)}
+                    className="action-btn btn-task"
+                  >
+                    <FiPlus size={16} />
+                    Assign Task
+                  </button>
+                )}
+                {userRole === 'hr' && (
+                  <>
+                    <button
+                      onClick={() => openModal('edit', intern)}
+                      className="action-btn btn-edit"
+                    >
+                      <FiEdit2 size={16} />
+                      Edit
+                    </button>
+                    <button
+                      onClick={() => deleteIntern(intern.id)}
+                      className="action-btn btn-delete"
+                    >
+                      <FiTrash2 size={16} />
+                      Delete
+                    </button>
+                  </>
+                )}
+              </div>
             </div>
-            <form onSubmit={handleAddIntern} className="modal-form">
-              <div className="form-sections">
-                <div className="form-section-group">
-                  <h3 className="section-label">Personal Information</h3>
-                  <div className="form-row-grid">
-                    <div className="input-field-group">
-                      <label>Full Name *</label>
-                      <input
-                        type="text"
-                        name="name"
-                        value={formData.name}
-                        onChange={handleInputChange}
-                        required
-                        placeholder="Enter full name"
-                      />
-                    </div>
-                    <div className="input-field-group">
-                      <label>Email Address *</label>
-                      <input
-                        type="email"
-                        name="email"
-                        value={formData.email}
-                        onChange={handleInputChange}
-                        required
-                        placeholder="email@example.com"
-                      />
-                    </div>
-                    <div className="input-field-group">
-                      <label>Phone Number *</label>
-                      <input
-                        type="tel"
-                        name="phone"
-                        value={formData.phone}
-                        onChange={handleInputChange}
-                        required
-                        placeholder="+1 234-567-8900"
-                      />
-                    </div>
-                    <div className="input-field-group">
-                      <label>Emergency Contact *</label>
-                      <input
-                        type="tel"
-                        name="emergencyContact"
-                        value={formData.emergencyContact}
-                        onChange={handleInputChange}
-                        required
-                        placeholder="+1 234-567-8900"
-                      />
+          ))}
+        </div>
+      )}
+
+      {/* Tasks View for Intern */}
+      {userRole === 'intern' && (
+        <div className="tasks-section">
+          <div className="tasks-list">
+            {filteredTasks.map(task => (
+              <div key={task.id} className="task-card-detailed">
+                <div className="task-card-header">
+                  <div>
+                    <h3 className="task-title">{task.title}</h3>
+                    <p className="task-project">
+                      <FiBriefcase size={14} />
+                      {task.project}
+                    </p>
+                  </div>
+                  <span className={`priority-badge ${getPriorityColor(task.priority)}`}>
+                    {task.priority} Priority
+                  </span>
+                </div>
+
+                <p className="task-description">{task.description}</p>
+
+                <div className="task-meta-grid">
+                  <div className="task-meta-item">
+                    <FiUser size={16} />
+                    <div>
+                      <span className="meta-label">Assigned By</span>
+                      <span className="meta-value">{task.assignedBy}</span>
                     </div>
                   </div>
-                  <div className="input-field-group full-width">
-                    <label>Address *</label>
-                    <textarea
-                      name="address"
-                      value={formData.address}
-                      onChange={handleInputChange}
+                  <div className="task-meta-item">
+                    <FiCalendar size={16} />
+                    <div>
+                      <span className="meta-label">Deadline</span>
+                      <span className="meta-value">
+                        {new Date(task.deadline).toLocaleDateString()}
+                      </span>
+                    </div>
+                  </div>
+                  <div className="task-meta-item">
+                    <FiClock size={16} />
+                    <div>
+                      <span className="meta-label">Assigned On</span>
+                      <span className="meta-value">
+                        {new Date(task.assignedDate).toLocaleDateString()}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="task-card-footer">
+                  <span className={`status-badge ${getStatusColor(task.status)}`}>
+                    {task.status}
+                  </span>
+                  <div className="task-actions">
+                    {task.status === 'Pending' && (
+                      <button
+                        onClick={() => updateTaskStatus(task.id, 'In Progress')}
+                        className="task-action-btn btn-start"
+                      >
+                        Start Task
+                      </button>
+                    )}
+                    {task.status === 'In Progress' && (
+                      <button
+                        onClick={() => updateTaskStatus(task.id, 'Completed')}
+                        className="task-action-btn btn-complete"
+                      >
+                        Mark Complete
+                      </button>
+                    )}
+                    {task.status === 'Completed' && (
+                      <span className="completed-badge">
+                        <FiCheckCircle size={16} />
+                        Completed on {new Date(task.completedDate).toLocaleDateString()}
+                      </span>
+                    )}
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {/* Tasks Section for Mentor */}
+      {userRole === 'mentor' && (
+        <div className="tasks-section">
+          <div className="section-header">
+            <h2 className="section-title">Assigned Tasks</h2>
+          </div>
+          <div className="tasks-table-wrapper">
+            <table className="tasks-table">
+              <thead>
+                <tr>
+                  <th>Task Title</th>
+                  <th>Intern</th>
+                  <th>Project</th>
+                  <th>Priority</th>
+                  <th>Deadline</th>
+                  <th>Status</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                {filteredTasks.map(task => (
+                  <tr key={task.id}>
+                    <td className="task-title-cell">{task.title}</td>
+                    <td>{task.internName}</td>
+                    <td>{task.project}</td>
+                    <td>
+                      <span className={`priority-badge ${getPriorityColor(task.priority)}`}>
+                        {task.priority}
+                      </span>
+                    </td>
+                    <td>{new Date(task.deadline).toLocaleDateString()}</td>
+                    <td>
+                      <span className={`status-badge ${getStatusColor(task.status)}`}>
+                        {task.status}
+                      </span>
+                    </td>
+                    <td>
+                      <select
+                        value={task.status}
+                        onChange={(e) => updateTaskStatus(task.id, e.target.value)}
+                        className="status-select"
+                      >
+                        <option value="Pending">Pending</option>
+                        <option value="In Progress">In Progress</option>
+                        <option value="Completed">Completed</option>
+                      </select>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      )}
+
+      {/* Add/Edit Intern Modal */}
+      {showModal && userRole === 'hr' && (
+        <div className="modal-overlay" onClick={closeModal}>
+          <div className="modal" onClick={(e) => e.stopPropagation()}>
+            <div className="modal-header">
+              <h2 className="modal-title">
+                {modalMode === 'add' ? 'Add New Intern' : 'Edit Intern'}
+              </h2>
+              <button onClick={closeModal} className="close-btn">×</button>
+            </div>
+
+            <form onSubmit={handleSubmit} className="modal-form">
+              <div className="form-section">
+                <h3 className="form-section-title">Personal Information</h3>
+                <div className="form-grid">
+                  <div className="form-group">
+                    <label className="form-label">Full Name *</label>
+                    <input
+                      type="text"
                       required
-                      placeholder="Enter complete address"
-                      rows="2"
+                      value={formData.name}
+                      onChange={(e) => setFormData({...formData, name: e.target.value})}
+                      className="form-input"
+                      placeholder="Enter full name"
                     />
                   </div>
-                </div>
 
-                <div className="form-section-group">
-                  <h3 className="section-label">Academic Information</h3>
-                  <div className="form-row-grid">
-                    <div className="input-field-group">
-                      <label>College/University *</label>
-                      <input
-                        type="text"
-                        name="college"
-                        value={formData.college}
-                        onChange={handleInputChange}
-                        required
-                        placeholder="Enter college name"
-                      />
-                    </div>
-                    <div className="input-field-group">
-                      <label>Degree *</label>
-                      <input
-                        type="text"
-                        name="degree"
-                        value={formData.degree}
-                        onChange={handleInputChange}
-                        required
-                        placeholder="e.g., B.Tech CSE"
-                      />
-                    </div>
-                    <div className="input-field-group">
-                      <label>Year *</label>
-                      <select
-                        name="year"
-                        value={formData.year}
-                        onChange={handleInputChange}
-                        required
-                      >
-                        <option value="">Select Year</option>
-                        <option value="1st Year">1st Year</option>
-                        <option value="2nd Year">2nd Year</option>
-                        <option value="3rd Year">3rd Year</option>
-                        <option value="4th Year">4th Year</option>
-                        <option value="Final Year">Final Year</option>
-                      </select>
-                    </div>
+                  <div className="form-group">
+                    <label className="form-label">Email *</label>
+                    <input
+                      type="email"
+                      required
+                      value={formData.email}
+                      onChange={(e) => setFormData({...formData, email: e.target.value})}
+                      className="form-input"
+                      placeholder="Enter email"
+                    />
                   </div>
-                </div>
 
-                <div className="form-section-group">
-                  <h3 className="section-label">Internship Details</h3>
-                  <div className="form-row-grid">
-                    <div className="input-field-group">
-                      <label>Domain *</label>
-                      <select
-                        name="domain"
-                        value={formData.domain}
-                        onChange={handleInputChange}
-                        required
-                      >
-                        <option value="">Select Domain</option>
-                        {domains.filter(d => d !== 'All').map(domain => (
-                          <option key={domain} value={domain}>{domain}</option>
-                        ))}
-                      </select>
-                    </div>
-                    <div className="input-field-group">
-                      <label>Assign Mentor *</label>
-                      <select
-                        name="mentor"
-                        value={formData.mentor}
-                        onChange={handleInputChange}
-                        required
-                      >
-                        <option value="">Select Mentor</option>
-                        {mentors.map(mentor => (
-                          <option key={mentor} value={mentor}>{mentor}</option>
-                        ))}
-                      </select>
-                    </div>
-                    <div className="input-field-group">
-                      <label>Start Date *</label>
-                      <input
-                        type="date"
-                        name="startDate"
-                        value={formData.startDate}
-                        onChange={handleInputChange}
-                        required
-                      />
-                    </div>
-                    <div className="input-field-group">
-                      <label>End Date *</label>
-                      <input
-                        type="date"
-                        name="endDate"
-                        value={formData.endDate}
-                        onChange={handleInputChange}
-                        required
-                      />
-                    </div>
+                  <div className="form-group">
+                    <label className="form-label">Phone *</label>
+                    <input
+                      type="tel"
+                      required
+                      value={formData.phone}
+                      onChange={(e) => setFormData({...formData, phone: e.target.value})}
+                      className="form-input"
+                      placeholder="Enter phone number"
+                    />
                   </div>
-                </div>
 
-                <div className="form-section-group">
-                  <h3 className="section-label">📎 Upload Documents</h3>
-                  <div className="upload-files-grid">
-                    <div className="file-upload-box">
-                      <input type="file" id="resume-upload" accept=".pdf,.doc,.docx" />
-                      <label htmlFor="resume-upload">
-                        <span className="upload-emoji">📄</span>
-                        <p className="upload-text">Resume / CV</p>
-                        <span className="upload-hint">PDF, DOC, DOCX</span>
-                      </label>
-                    </div>
-                    <div className="file-upload-box">
-                      <input type="file" id="offer-upload" accept=".pdf" />
-                      <label htmlFor="offer-upload">
-                        <span className="upload-emoji">📋</span>
-                        <p className="upload-text">Offer Letter</p>
-                        <span className="upload-hint">PDF only</span>
-                      </label>
-                    </div>
-                    <div className="file-upload-box">
-                      <input type="file" id="id-upload" accept=".pdf,.jpg,.png" />
-                      <label htmlFor="id-upload">
-                        <span className="upload-emoji">🆔</span>
-                        <p className="upload-text">ID Proof</p>
-                        <span className="upload-hint">PDF, JPG, PNG</span>
-                      </label>
-                    </div>
+                  <div className="form-group form-group-full">
+                    <label className="form-label">Address</label>
+                    <input
+                      type="text"
+                      value={formData.address}
+                      onChange={(e) => setFormData({...formData, address: e.target.value})}
+                      className="form-input"
+                      placeholder="Enter address"
+                    />
                   </div>
                 </div>
               </div>
 
-              <div className="modal-footer-actions">
-                <button type="button" className="btn-secondary-modal" onClick={() => setShowAddModal(false)}>
+              <div className="form-section">
+                <h3 className="form-section-title">Academic Information</h3>
+                <div className="form-grid">
+                  <div className="form-group">
+                    <label className="form-label">College/University *</label>
+                    <input
+                      type="text"
+                      required
+                      value={formData.college}
+                      onChange={(e) => setFormData({...formData, college: e.target.value})}
+                      className="form-input"
+                      placeholder="Enter college name"
+                    />
+                  </div>
+
+                  <div className="form-group">
+                    <label className="form-label">Degree *</label>
+                    <input
+                      type="text"
+                      required
+                      value={formData.degree}
+                      onChange={(e) => setFormData({...formData, degree: e.target.value})}
+                      className="form-input"
+                      placeholder="e.g., B.Tech CSE"
+                    />
+                  </div>
+
+                  <div className="form-group">
+                    <label className="form-label">Year *</label>
+                    <select
+                      required
+                      value={formData.year}
+                      onChange={(e) => setFormData({...formData, year: e.target.value})}
+                      className="form-input"
+                    >
+                      <option value="">Select Year</option>
+                      <option value="1st Year">1st Year</option>
+                      <option value="2nd Year">2nd Year</option>
+                      <option value="3rd Year">3rd Year</option>
+                      <option value="Final Year">Final Year</option>
+                    </select>
+                  </div>
+
+                  <div className="form-group">
+                    <label className="form-label">CGPA *</label>
+                    <input
+                      type="number"
+                      step="0.01"
+                      required
+                      value={formData.cgpa}
+                      onChange={(e) => setFormData({...formData, cgpa: e.target.value})}
+                      className="form-input"
+                      placeholder="Enter CGPA"
+                    />
+                  </div>
+                </div>
+              </div>
+
+              <div className="form-section">
+                <h3 className="form-section-title">Internship Details</h3>
+                <div className="form-grid">
+                  <div className="form-group">
+                    <label className="form-label">Domain *</label>
+                    <input
+                      type="text"
+                      required
+                      value={formData.domain}
+                      onChange={(e) => setFormData({...formData, domain: e.target.value})}
+                      className="form-input"
+                      placeholder="e.g., Full Stack Development"
+                    />
+                  </div>
+
+                  <div className="form-group">
+                    <label className="form-label">Project *</label>
+                    <input
+                      type="text"
+                      required
+                      value={formData.project}
+                      onChange={(e) => setFormData({...formData, project: e.target.value})}
+                      className="form-input"
+                      placeholder="Enter project name"
+                    />
+                  </div>
+
+                  <div className="form-group">
+                    <label className="form-label">Assign Mentor *</label>
+                    <select
+                      required
+                      value={formData.mentorId}
+                      onChange={handleMentorChange}
+                      className="form-input"
+                    >
+                      <option value="">Select Mentor</option>
+                      {mentors.map(mentor => (
+                        <option key={mentor.id} value={mentor.id}>
+                          {mentor.name} - {mentor.department}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+
+                  <div className="form-group">
+                    <label className="form-label">Department</label>
+                    <input
+                      type="text"
+                      value={formData.department}
+                      readOnly
+                      className="form-input"
+                      placeholder="Auto-filled from mentor"
+                    />
+                  </div>
+
+                  <div className="form-group">
+                    <label className="form-label">Start Date *</label>
+                    <input
+                      type="date"
+                      required
+                      value={formData.startDate}
+                      onChange={(e) => setFormData({...formData, startDate: e.target.value})}
+                      className="form-input"
+                    />
+                  </div>
+
+                  <div className="form-group">
+                    <label className="form-label">End Date *</label>
+                    <input
+                      type="date"
+                      required
+                      value={formData.endDate}
+                      onChange={(e) => setFormData({...formData, endDate: e.target.value})}
+                      className="form-input"
+                    />
+                  </div>
+                </div>
+              </div>
+
+              <div className="form-section">
+                <h3 className="form-section-title">Documents Upload</h3>
+                <div className="upload-grid">
+                  <div className="upload-item">
+                    <label className="upload-label">
+                      <FiUpload size={20} />
+                      <span>Resume</span>
+                    </label>
+                    <input type="file" className="file-input" accept=".pdf,.doc,.docx" />
+                  </div>
+                  <div className="upload-item">
+                    <label className="upload-label">
+                      <FiUpload size={20} />
+                      <span>Offer Letter</span>
+                    </label>
+                    <input type="file" className="file-input" accept=".pdf" />
+                  </div>
+                  <div className="upload-item">
+                    <label className="upload-label">
+                      <FiUpload size={20} />
+                      <span>ID Proof</span>
+                    </label>
+                    <input type="file" className="file-input" accept=".pdf,.jpg,.png" />
+                  </div>
+                </div>
+              </div>
+
+              <div className="modal-footer">
+                <button type="button" onClick={closeModal} className="cancel-btn">
                   Cancel
                 </button>
-                <button type="submit" className="btn-primary-modal">
-                  Add Intern
+                <button type="submit" className="submit-btn">
+                  {modalMode === 'add' ? 'Add Intern' : 'Update Intern'}
                 </button>
               </div>
             </form>
@@ -607,94 +990,189 @@ const Interns = ({ userRole }) => {
         </div>
       )}
 
-      {/* View Modal */}
-      {showViewModal && selectedIntern && (
-        <div className="modal-backdrop" onClick={() => setShowViewModal(false)}>
-          <div className="modal-box modal-view-size" onClick={(e) => e.stopPropagation()}>
-            <div className="modal-top">
-              <h2 className="modal-heading">👤 Intern Profile</h2>
-              <button className="modal-close-btn" onClick={() => setShowViewModal(false)}>✕</button>
+      {/* View Details Modal */}
+      {viewDetails && (
+        <div className="modal-overlay" onClick={() => setViewDetails(null)}>
+          <div className="modal modal-large" onClick={(e) => e.stopPropagation()}>
+            <div className="modal-header">
+              <h2 className="modal-title">Intern Details</h2>
+              <button onClick={() => setViewDetails(null)} className="close-btn">×</button>
             </div>
-            <div className="view-modal-content">
-              <div className="profile-header-section">
-                <div className="profile-avatar-large">{selectedIntern.name.charAt(0)}</div>
-                <div className="profile-main-info">
-                  <h3 className="profile-name">{selectedIntern.name}</h3>
-                  <p className="profile-email">{selectedIntern.email}</p>
-                  <span className={`status-tag status-${selectedIntern.status.toLowerCase().replace(' ', '-')}`}>
-                    {selectedIntern.status}
+
+            <div className="details-content">
+              <div className="details-header">
+                <div className="details-avatar-large">
+                  {viewDetails.name.charAt(0)}
+                </div>
+                <div className="details-basic">
+                  <h3 className="details-name">{viewDetails.name}</h3>
+                  <p className="details-id">{viewDetails.internId}</p>
+                  <span className={`status-badge ${getStatusColor(viewDetails.status)}`}>
+                    {viewDetails.status}
                   </span>
                 </div>
               </div>
 
-              <div className="details-grid-layout">
-                <div className="detail-row">
-                  <span className="detail-key">📞 Phone:</span>
-                  <span className="detail-val">{selectedIntern.phone}</span>
+              <div className="details-grid">
+                <div className="details-section">
+                  <h4 className="details-section-title">Personal Information</h4>
+                  <div className="details-info-grid">
+                    <div className="detail-item">
+                      <FiMail size={18} />
+                      <div>
+                        <span className="detail-label">Email</span>
+                        <span className="detail-value">{viewDetails.email}</span>
+                      </div>
+                    </div>
+                    <div className="detail-item">
+                      <FiPhone size={18} />
+                      <div>
+                        <span className="detail-label">Phone</span>
+                        <span className="detail-value">{viewDetails.phone}</span>
+                      </div>
+                    </div>
+                    <div className="detail-item">
+                      <FiMapPin size={18} />
+                      <div>
+                        <span className="detail-label">Address</span>
+                        <span className="detail-value">{viewDetails.address}</span>
+                      </div>
+                    </div>
+                  </div>
                 </div>
-                <div className="detail-row">
-                  <span className="detail-key">🚨 Emergency:</span>
-                  <span className="detail-val">{selectedIntern.emergencyContact}</span>
-                </div>
-                <div className="detail-row">
-                  <span className="detail-key">💼 Domain:</span>
-                  <span className="detail-val">{selectedIntern.domain}</span>
-                </div>
-                <div className="detail-row">
-                  <span className="detail-key">👨‍🏫 Mentor:</span>
-                  <span className="detail-val">{selectedIntern.mentor}</span>
-                </div>
-                <div className="detail-row">
-                  <span className="detail-key">🎓 College:</span>
-                  <span className="detail-val">{selectedIntern.college}</span>
-                </div>
-                <div className="detail-row">
-                  <span className="detail-key">📚 Degree:</span>
-                  <span className="detail-val">{selectedIntern.degree}</span>
-                </div>
-                <div className="detail-row">
-                  <span className="detail-key">📅 Year:</span>
-                  <span className="detail-val">{selectedIntern.year}</span>
-                </div>
-                <div className="detail-row">
-                  <span className="detail-key">📍 Address:</span>
-                  <span className="detail-val">{selectedIntern.address}</span>
-                </div>
-                <div className="detail-row">
-                  <span className="detail-key">📅 Start Date:</span>
-                  <span className="detail-val">{selectedIntern.startDate}</span>
-                </div>
-                <div className="detail-row">
-                  <span className="detail-key">📅 End Date:</span>
-                  <span className="detail-val">{selectedIntern.endDate}</span>
-                </div>
-                <div className="detail-row">
-                  <span className="detail-key">📊 Attendance:</span>
-                  <span className="detail-val">{selectedIntern.attendance}%</span>
-                </div>
-                <div className="detail-row">
-                  <span className="detail-key">✅ Tasks:</span>
-                  <span className="detail-val">{selectedIntern.tasksCompleted}/{selectedIntern.totalTasks}</span>
-                </div>
-              </div>
 
-              <div className="documents-view-section">
-                <h4 className="docs-heading">📎 Uploaded Documents</h4>
-                <div className="docs-list-view">
-                  <div className="doc-item-row">
-                    <span className="doc-icon">📄</span>
-                    <span className="doc-name">Resume:</span>
-                    <a href="#" className="doc-download-link">{selectedIntern.documents.resume}</a>
+                <div className="details-section">
+                  <h4 className="details-section-title">Academic Information</h4>
+                  <div className="details-info-grid">
+                    <div className="detail-item">
+                      <FiFileText size={18} />
+                      <div>
+                        <span className="detail-label">College</span>
+                        <span className="detail-value">{viewDetails.college}</span>
+                      </div>
+                    </div>
+                    <div className="detail-item">
+                      <FiFileText size={18} />
+                      <div>
+                        <span className="detail-label">Degree</span>
+                        <span className="detail-value">{viewDetails.degree}</span>
+                      </div>
+                    </div>
+                    <div className="detail-item">
+                      <FiFileText size={18} />
+                      <div>
+                        <span className="detail-label">Year</span>
+                        <span className="detail-value">{viewDetails.year}</span>
+                      </div>
+                    </div>
+                    <div className="detail-item">
+                      <FiFileText size={18} />
+                      <div>
+                        <span className="detail-label">CGPA</span>
+                        <span className="detail-value">{viewDetails.cgpa}</span>
+                      </div>
+                    </div>
                   </div>
-                  <div className="doc-item-row">
-                    <span className="doc-icon">📋</span>
-                    <span className="doc-name">Offer Letter:</span>
-                    <a href="#" className="doc-download-link">{selectedIntern.documents.offerLetter}</a>
+                </div>
+
+                <div className="details-section">
+                  <h4 className="details-section-title">Internship Details</h4>
+                  <div className="details-info-grid">
+                    <div className="detail-item">
+                      <FiBriefcase size={18} />
+                      <div>
+                        <span className="detail-label">Department</span>
+                        <span className="detail-value">{viewDetails.department}</span>
+                      </div>
+                    </div>
+                    <div className="detail-item">
+                      <FiBriefcase size={18} />
+                      <div>
+                        <span className="detail-label">Domain</span>
+                        <span className="detail-value">{viewDetails.domain}</span>
+                      </div>
+                    </div>
+                    <div className="detail-item">
+                      <FiUser size={18} />
+                      <div>
+                        <span className="detail-label">Mentor</span>
+                        <span className="detail-value">{viewDetails.mentor}</span>
+                      </div>
+                    </div>
+                    <div className="detail-item">
+                      <FiTarget size={18} />
+                      <div>
+                        <span className="detail-label">Project</span>
+                        <span className="detail-value">{viewDetails.project}</span>
+                      </div>
+                    </div>
+                    <div className="detail-item">
+                      <FiCalendar size={18} />
+                      <div>
+                        <span className="detail-label">Duration</span>
+                        <span className="detail-value">{viewDetails.duration}</span>
+                      </div>
+                    </div>
+                    <div className="detail-item">
+                      <FiCalendar size={18} />
+                      <div>
+                        <span className="detail-label">Start Date</span>
+                        <span className="detail-value">
+                          {new Date(viewDetails.startDate).toLocaleDateString()}
+                        </span>
+                      </div>
+                    </div>
                   </div>
-                  <div className="doc-item-row">
-                    <span className="doc-icon">🆔</span>
-                    <span className="doc-name">ID Proof:</span>
-                    <a href="#" className="doc-download-link">{selectedIntern.documents.idProof}</a>
+                </div>
+
+                <div className="details-section">
+                  <h4 className="details-section-title">Performance Metrics</h4>
+                  <div className="performance-grid">
+                    <div className="performance-item">
+                      <div className="performance-circle" style={{background: 'linear-gradient(135deg, #10b981 0%, #059669 100%)'}}>
+                        <span className="performance-value">{viewDetails.attendance}%</span>
+                      </div>
+                      <span className="performance-label">Attendance</span>
+                    </div>
+                    <div className="performance-item">
+                      <div className="performance-circle" style={{background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)'}}>
+                        <span className="performance-value">{viewDetails.tasksCompleted}</span>
+                      </div>
+                      <span className="performance-label">Tasks Completed</span>
+                    </div>
+                    <div className="performance-item">
+                      <div className="performance-circle" style={{background: 'linear-gradient(135deg, #f59e0b 0%, #d97706 100%)'}}>
+                        <span className="performance-value">{viewDetails.reportsSubmitted}</span>
+                      </div>
+                      <span className="performance-label">Reports Submitted</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="details-section">
+                  <h4 className="details-section-title">Uploaded Documents</h4>
+                  <div className="documents-list">
+                    {viewDetails.documents.resume && (
+                      <div className="document-item">
+                        <FiFileText size={20} />
+                        <span>{viewDetails.documents.resume}</span>
+                        <button className="download-btn">Download</button>
+                      </div>
+                    )}
+                    {viewDetails.documents.offerLetter && (
+                      <div className="document-item">
+                        <FiFileText size={20} />
+                        <span>{viewDetails.documents.offerLetter}</span>
+                        <button className="download-btn">Download</button>
+                      </div>
+                    )}
+                    {viewDetails.documents.idProof && (
+                      <div className="document-item">
+                        <FiFileText size={20} />
+                        <span>{viewDetails.documents.idProof}</span>
+                        <button className="download-btn">Download</button>
+                      </div>
+                    )}
                   </div>
                 </div>
               </div>
@@ -703,92 +1181,86 @@ const Interns = ({ userRole }) => {
         </div>
       )}
 
-      {/* Edit Modal */}
-      {showEditModal && selectedIntern && (
-        <div className="modal-backdrop" onClick={() => setShowEditModal(false)}>
-          <div className="modal-box" onClick={(e) => e.stopPropagation()}>
-            <div className="modal-top">
-              <h2 className="modal-heading">✏️ Edit Intern</h2>
-              <button className="modal-close-btn" onClick={() => setShowEditModal(false)}>✕</button>
+      {/* Assign Task Modal - For Mentor */}
+      {showTaskModal && (
+        <div className="modal-overlay" onClick={closeTaskModal}>
+          <div className="modal" onClick={(e) => e.stopPropagation()}>
+            <div className="modal-header">
+              <h2 className="modal-title">
+                Assign Task to {selectedInternForTask?.name}
+              </h2>
+              <button onClick={closeTaskModal} className="close-btn">×</button>
             </div>
-            <form onSubmit={handleUpdateIntern} className="modal-form">
-              <div className="form-row-grid">
-                <div className="input-field-group">
-                  <label>Full Name *</label>
-                  <input
-                    type="text"
-                    name="name"
-                    value={formData.name}
-                    onChange={handleInputChange}
-                    required
-                  />
-                </div>
-                <div className="input-field-group">
-                  <label>Email *</label>
-                  <input
-                    type="email"
-                    name="email"
-                    value={formData.email}
-                    onChange={handleInputChange}
-                    required
-                  />
-                </div>
-                <div className="input-field-group">
-                  <label>Phone *</label>
-                  <input
-                    type="tel"
-                    name="phone"
-                    value={formData.phone}
-                    onChange={handleInputChange}
-                    required
-                  />
-                </div>
-                <div className="input-field-group">
-                  <label>Domain *</label>
+
+            <form onSubmit={handleTaskSubmit} className="modal-form">
+              <div className="form-group">
+                <label className="form-label">Task Title *</label>
+                <input
+                  type="text"
+                  required
+                  value={taskFormData.title}
+                  onChange={(e) => setTaskFormData({...taskFormData, title: e.target.value})}
+                  className="form-input"
+                  placeholder="Enter task title"
+                />
+              </div>
+
+              <div className="form-group">
+                <label className="form-label">Description *</label>
+                <textarea
+                  required
+                  value={taskFormData.description}
+                  onChange={(e) => setTaskFormData({...taskFormData, description: e.target.value})}
+                  className="form-textarea"
+                  placeholder="Enter task description"
+                  rows={4}
+                />
+              </div>
+
+              <div className="form-grid">
+                <div className="form-group">
+                  <label className="form-label">Priority *</label>
                   <select
-                    name="domain"
-                    value={formData.domain}
-                    onChange={handleInputChange}
                     required
+                    value={taskFormData.priority}
+                    onChange={(e) => setTaskFormData({...taskFormData, priority: e.target.value})}
+                    className="form-input"
                   >
-                    {domains.filter(d => d !== 'All').map(domain => (
-                      <option key={domain} value={domain}>{domain}</option>
-                    ))}
+                    <option value="Low">Low</option>
+                    <option value="Medium">Medium</option>
+                    <option value="High">High</option>
                   </select>
                 </div>
-                <div className="input-field-group">
-                  <label>Mentor *</label>
-                  <select
-                    name="mentor"
-                    value={formData.mentor}
-                    onChange={handleInputChange}
+
+                <div className="form-group">
+                  <label className="form-label">Deadline *</label>
+                  <input
+                    type="date"
                     required
-                  >
-                    {mentors.map(mentor => (
-                      <option key={mentor} value={mentor}>{mentor}</option>
-                    ))}
-                  </select>
-                </div>
-                <div className="input-field-group">
-                  <label>Status *</label>
-                  <select
-                    name="status"
-                    value={formData.status}
-                    onChange={handleInputChange}
-                    required
-                  >
-                    <option value="Active">Active</option>
-                    <option value="On Leave">On Leave</option>
-                    <option value="Completed">Completed</option>
-                  </select>
+                    value={taskFormData.deadline}
+                    onChange={(e) => setTaskFormData({...taskFormData, deadline: e.target.value})}
+                    className="form-input"
+                  />
                 </div>
               </div>
-              <div className="modal-footer-actions">
-                <button type="button" className="btn-secondary-modal" onClick={() => setShowEditModal(false)}>
+
+              <div className="form-group">
+                <label className="form-label">Project</label>
+                <input
+                  type="text"
+                  value={taskFormData.project}
+                  readOnly
+                  className="form-input"
+                  placeholder="Project name"
+                />
+              </div>
+
+              <div className="modal-footer">
+                <button type="button" onClick={closeTaskModal} className="cancel-btn">
                   Cancel
                 </button>
-                <button type="submit" className="btn-primary-modal">
-                  Update Intern
+                <button type="submit" className="submit-btn">
+                  Assign Task
                 </button>
               </div>
             </form>
