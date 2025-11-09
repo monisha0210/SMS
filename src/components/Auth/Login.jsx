@@ -1,6 +1,5 @@
-// src/components/Auth/Login.jsx
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import './Login.css';
 
 const Login = ({ onLogin }) => {
@@ -8,9 +7,11 @@ const Login = ({ onLogin }) => {
   const [credentials, setCredentials] = useState({
     email: '',
     password: '',
-    role: 'mentor'
+    role: 'intern'
   });
   const [error, setError] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleChange = (e) => {
     setCredentials({
@@ -36,22 +37,51 @@ const Login = ({ onLogin }) => {
       return;
     }
 
-    // Set user data based on role
-    const userData = {
-      email: credentials.email,
-      role: credentials.role,
-      name: credentials.role === 'hr' 
-        ? 'HR Admin' 
-        : credentials.role === 'mentor' 
-        ? 'Sarah Wilson' 
-        : 'John Doe'
-    };
+    setIsLoading(true);
 
-    // Call parent login handler
-    onLogin(userData);
-    
-    // Navigate to dashboard
-    navigate('/dashboard');
+    // Simulate API call with timeout
+    setTimeout(() => {
+      // Demo credentials for testing
+      const demoUsers = {
+        'hr@example.com': { role: 'hr', name: 'HR Admin' },
+        'mentor@example.com': { role: 'mentor', name: 'Sarah Wilson' },
+        'intern@example.com': { role: 'intern', name: 'John Doe' }
+      };
+
+      // Check demo credentials (password: password123)
+      if (demoUsers[credentials.email] && credentials.password === 'password123') {
+        const userData = {
+          email: credentials.email,
+          role: demoUsers[credentials.email].role,
+          name: demoUsers[credentials.email].name
+        };
+
+        // Call parent login handler
+        onLogin(userData);
+        
+        // Navigate to dashboard
+        navigate('/dashboard');
+      } else {
+        // For any other email, use the selected role
+        const userData = {
+          email: credentials.email,
+          role: credentials.role,
+          name: credentials.role === 'hr' 
+            ? 'HR Admin' 
+            : credentials.role === 'mentor' 
+            ? 'Sarah Wilson' 
+            : 'John Doe'
+        };
+
+        // Call parent login handler
+        onLogin(userData);
+        
+        // Navigate to dashboard
+        navigate('/dashboard');
+      }
+
+      setIsLoading(false);
+    }, 1000);
   };
 
   return (
@@ -70,9 +100,13 @@ const Login = ({ onLogin }) => {
 
         {error && (
           <div className="alert alert-danger">
+            <span className="alert-icon">⚠️</span>
             {error}
           </div>
         )}
+
+        {/* Demo Credentials Info */}
+        
 
         <form onSubmit={handleSubmit} className="login-form">
           <div className="form-group">
@@ -91,6 +125,7 @@ const Login = ({ onLogin }) => {
               value={credentials.email}
               onChange={handleChange}
               autoComplete="email"
+              disabled={isLoading}
             />
           </div>
 
@@ -101,16 +136,27 @@ const Login = ({ onLogin }) => {
               </svg>
               Password
             </label>
-            <input
-              type="password"
-              id="password"
-              name="password"
-              className="form-input"
-              placeholder="Enter your password"
-              value={credentials.password}
-              onChange={handleChange}
-              autoComplete="current-password"
-            />
+            <div className="password-wrapper">
+              <input
+                type={showPassword ? "text" : "password"}
+                id="password"
+                name="password"
+                className="form-input"
+                placeholder="Enter your password"
+                value={credentials.password}
+                onChange={handleChange}
+                autoComplete="current-password"
+                disabled={isLoading}
+              />
+              <button
+                type="button"
+                className="password-toggle"
+                onClick={() => setShowPassword(!showPassword)}
+                tabIndex="-1"
+              >
+                {showPassword ? '👁️' : '👁️‍🗨️'}
+              </button>
+            </div>
           </div>
 
           <div className="form-group">
@@ -126,6 +172,7 @@ const Login = ({ onLogin }) => {
               className="form-select"
               value={credentials.role}
               onChange={handleChange}
+              disabled={isLoading}
             >
               <option value="hr">HR Administrator</option>
               <option value="mentor">Mentor</option>
@@ -138,19 +185,33 @@ const Login = ({ onLogin }) => {
               <input type="checkbox" />
               <span>Remember me</span>
             </label>
-            <a href="#" className="forgot-password">Forgot password?</a>
+            <Link to="/forgot-password" className="forgot-password">
+              Forgot password?
+            </Link>
           </div>
 
-          <button type="submit" className="btn btn-primary btn-block">
-            Sign In
+          <button 
+            type="submit" 
+            className="btn-block"
+            disabled={isLoading}
+          >
+            {isLoading ? (
+              <>
+                <span className="spinner"></span>
+                Signing In...
+              </>
+            ) : (
+              'Sign In'
+            )}
           </button>
         </form>
 
         <div className="login-footer">
-          <p>Don't have an account? <a href="#">Contact HR</a></p>
+          <p>
+            Don't have an account? 
+            <Link to="/signup" className="link-text"> Sign Up</Link>
+          </p>
         </div>
-
-        
       </div>
     </div>
   );

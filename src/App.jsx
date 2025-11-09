@@ -8,18 +8,19 @@ import Footer from './components/Footer/Footer';
 
 // Auth Pages
 import Login from './components/Auth/Login';
+import Signup from './components/Auth/Signup'; // Import Signup
 
 // Public Pages
 import Home from './components/Pages/Home';
 import About from './components/Pages/About';
 import Contact from './components/Pages/Contact';
 
-// Dashboard Pages - All use default exports now
+// Dashboard Pages
 import HRDashboard from './components/Dashboard/HRDashboard';
 import MentorDashboard from './components/Dashboard/MentorDashboard';
 import InternDashboard from './components/Dashboard/InternDashboard';
 
-// Common Pages - All use default exports now
+// Common Pages
 import Interns from './components/Pages/Interns';
 import Mentors from './components/Pages/Mentors';
 import Attendance from './components/Pages/Attendance';
@@ -115,9 +116,15 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route path="/about" element={<About />} />
             <Route path="/contact" element={<Contact />} />
+            
+            {/* Auth Routes */}
             <Route 
               path="/login" 
               element={user ? <Navigate to="/dashboard" replace /> : <Login onLogin={handleLogin} />} 
+            />
+            <Route 
+              path="/signup" 
+              element={user ? <Navigate to="/dashboard" replace /> : <Signup onLogin={handleLogin} />} 
             />
 
             {/* Protected Routes */}
