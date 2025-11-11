@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import './Attendance.css';
 
-const Attendance = ({ userRole }) => {
-  const [attendanceRecords, setAttendanceRecords] = useState([
+const Attendance = () => {
+  const [attendanceRecords] = useState([
     {
       id: 1,
       internName: 'John Doe',
@@ -25,16 +25,6 @@ const Attendance = ({ userRole }) => {
     },
     {
       id: 3,
-      internName: 'Alex Brown',
-      date: '2025-11-05',
-      checkIn: '09:00 AM',
-      checkOut: '05:00 PM',
-      workingHours: '8h 00m',
-      status: 'Present',
-      location: 'Office'
-    },
-    {
-      id: 4,
       internName: 'Mike Wilson',
       date: '2025-11-05',
       checkIn: '-',
@@ -44,7 +34,7 @@ const Attendance = ({ userRole }) => {
       location: '-'
     },
     {
-      id: 5,
+      id: 4,
       internName: 'Sarah Lee',
       date: '2025-11-05',
       checkIn: '09:30 AM',
@@ -55,7 +45,7 @@ const Attendance = ({ userRole }) => {
     }
   ]);
 
-  const [leaveApplications, setLeaveApplications] = useState([
+  const [leaveApplications] = useState([
     {
       id: 1,
       internName: 'John Doe',
@@ -79,61 +69,13 @@ const Attendance = ({ userRole }) => {
       appliedOn: '2025-11-03',
       status: 'Pending',
       documents: null
-    },
-    {
-      id: 3,
-      internName: 'Alex Brown',
-      leaveType: 'Casual Leave',
-      fromDate: '2025-11-08',
-      toDate: '2025-11-09',
-      days: 2,
-      reason: 'Personal work',
-      appliedOn: '2025-11-02',
-      status: 'Approved',
-      documents: null
-    },
-    {
-      id: 4,
-      internName: 'Mike Wilson',
-      leaveType: 'Medical Leave',
-      fromDate: '2025-11-05',
-      toDate: '2025-11-05',
-      days: 1,
-      reason: 'Doctor appointment',
-      appliedOn: '2025-11-04',
-      status: 'Rejected',
-      documents: null
     }
   ]);
 
   const [selectedDate, setSelectedDate] = useState('2025-11-05');
   const [searchTerm, setSearchTerm] = useState('');
   const [filterStatus, setFilterStatus] = useState('All');
-  const [leaveFilterStatus, setLeaveFilterStatus] = useState('Pending');
   const [activeTab, setActiveTab] = useState('attendance');
-  const [showLeaveModal, setShowLeaveModal] = useState(false);
-  const [selectedLeave, setSelectedLeave] = useState(null);
-
-  const handleApproveLeave = (leaveId) => {
-    const updatedLeaves = leaveApplications.map(leave =>
-      leave.id === leaveId ? { ...leave, status: 'Approved' } : leave
-    );
-    setLeaveApplications(updatedLeaves);
-    setShowLeaveModal(false);
-  };
-
-  const handleRejectLeave = (leaveId) => {
-    const updatedLeaves = leaveApplications.map(leave =>
-      leave.id === leaveId ? { ...leave, status: 'Rejected' } : leave
-    );
-    setLeaveApplications(updatedLeaves);
-    setShowLeaveModal(false);
-  };
-
-  const viewLeaveDetails = (leave) => {
-    setSelectedLeave(leave);
-    setShowLeaveModal(true);
-  };
 
   const filteredAttendance = attendanceRecords.filter(record => {
     const matchesSearch = record.internName.toLowerCase().includes(searchTerm.toLowerCase());
@@ -141,17 +83,14 @@ const Attendance = ({ userRole }) => {
     return matchesSearch && matchesStatus;
   });
 
-  const filteredLeaves = leaveApplications.filter(leave => {
-    const matchesSearch = leave.internName.toLowerCase().includes(searchTerm.toLowerCase());
-    const matchesStatus = leaveFilterStatus === 'All' || leave.status === leaveFilterStatus;
-    return matchesSearch && matchesStatus;
-  });
+  const filteredLeaves = leaveApplications.filter(leave => 
+    leave.internName.toLowerCase().includes(searchTerm.toLowerCase())
+  );
 
   const attendanceStats = {
     present: attendanceRecords.filter(r => r.status === 'Present').length,
     absent: attendanceRecords.filter(r => r.status === 'Absent').length,
     halfDay: attendanceRecords.filter(r => r.status === 'Half Day').length,
-    late: attendanceRecords.filter(r => r.status === 'Late').length,
     pendingLeaves: leaveApplications.filter(l => l.status === 'Pending').length
   };
 
@@ -264,7 +203,6 @@ const Attendance = ({ userRole }) => {
                   <option value="Present">Present</option>
                   <option value="Absent">Absent</option>
                   <option value="Half Day">Half Day</option>
-                  <option value="Late">Late</option>
                 </select>
               </div>
               <button className="export-btn">
@@ -321,7 +259,6 @@ const Attendance = ({ userRole }) => {
         {/* Leave Applications Tab Content */}
         {activeTab === 'leaves' && (
           <>
-            {/* Leave Filters */}
             <div className="attendance-filters-bar">
               <div className="attendance-filters-group">
                 <div className="attendance-search-wrapper">
@@ -334,20 +271,9 @@ const Attendance = ({ userRole }) => {
                     className="attendance-search-input"
                   />
                 </div>
-                <select
-                  value={leaveFilterStatus}
-                  onChange={(e) => setLeaveFilterStatus(e.target.value)}
-                  className="attendance-filter-select"
-                >
-                  <option value="All">All Status</option>
-                  <option value="Pending">Pending</option>
-                  <option value="Approved">Approved</option>
-                  <option value="Rejected">Rejected</option>
-                </select>
               </div>
             </div>
 
-            {/* Leave Applications Grid */}
             <div className="leave-applications-grid">
               {filteredLeaves.map(leave => (
                 <div key={leave.id} className="leave-application-card">
@@ -367,43 +293,28 @@ const Attendance = ({ userRole }) => {
                   <div className="leave-card-body">
                     <div className="leave-info-row">
                       <span className="leave-info-label">📅 Duration:</span>
-                      <span className="leave-info-value">{leave.fromDate} to {leave.toDate} ({leave.days} {leave.days === 1 ? 'day' : 'days'})</span>
+                      <span className="leave-info-value">{leave.fromDate} to {leave.toDate}</span>
                     </div>
                     <div className="leave-info-row">
                       <span className="leave-info-label">📝 Reason:</span>
                       <span className="leave-info-value">{leave.reason}</span>
                     </div>
                     <div className="leave-info-row">
-                      <span className="leave-info-label">🕐 Applied On:</span>
+                      <span className="leave-info-label">🕐 Applied:</span>
                       <span className="leave-info-value">{leave.appliedOn}</span>
                     </div>
-                    {leave.documents && (
-                      <div className="leave-info-row">
-                        <span className="leave-info-label">📎 Documents:</span>
-                        <a href="#" className="document-link">{leave.documents}</a>
-                      </div>
-                    )}
                   </div>
 
                   <div className="leave-card-footer">
-                    <button
-                      className="leave-action-btn btn-view-details"
-                      onClick={() => viewLeaveDetails(leave)}
-                    >
+                    <button className="leave-action-btn btn-view-details">
                       👁️ View Details
                     </button>
                     {leave.status === 'Pending' && (
                       <>
-                        <button
-                          className="leave-action-btn btn-approve"
-                          onClick={() => handleApproveLeave(leave.id)}
-                        >
+                        <button className="leave-action-btn btn-approve">
                           ✅ Approve
                         </button>
-                        <button
-                          className="leave-action-btn btn-reject"
-                          onClick={() => handleRejectLeave(leave.id)}
-                        >
+                        <button className="leave-action-btn btn-reject">
                           ❌ Reject
                         </button>
                       </>
@@ -415,78 +326,6 @@ const Attendance = ({ userRole }) => {
           </>
         )}
       </div>
-
-      {/* Leave Details Modal */}
-      {showLeaveModal && selectedLeave && (
-        <div className="attendance-modal-overlay" onClick={() => setShowLeaveModal(false)}>
-          <div className="attendance-modal-content" onClick={(e) => e.stopPropagation()}>
-            <div className="attendance-modal-header">
-              <h2 className="attendance-modal-title">📋 Leave Application Details</h2>
-              <button className="attendance-modal-close" onClick={() => setShowLeaveModal(false)}>✕</button>
-            </div>
-            <div className="attendance-modal-body">
-              <div className="leave-detail-section">
-                <div className="leave-detail-header">
-                  <div className="leave-detail-avatar">{selectedLeave.internName.charAt(0)}</div>
-                  <div>
-                    <h3 className="leave-detail-name">{selectedLeave.internName}</h3>
-                    <p className="leave-detail-type">{selectedLeave.leaveType}</p>
-                  </div>
-                  <span className={`leave-status-badge status-${selectedLeave.status.toLowerCase()}`}>
-                    {selectedLeave.status}
-                  </span>
-                </div>
-
-                <div className="leave-details-grid">
-                  <div className="leave-detail-item">
-                    <span className="detail-label-leave">📅 From Date:</span>
-                    <span className="detail-value-leave">{selectedLeave.fromDate}</span>
-                  </div>
-                  <div className="leave-detail-item">
-                    <span className="detail-label-leave">📅 To Date:</span>
-                    <span className="detail-value-leave">{selectedLeave.toDate}</span>
-                  </div>
-                  <div className="leave-detail-item">
-                    <span className="detail-label-leave">📊 Total Days:</span>
-                    <span className="detail-value-leave">{selectedLeave.days} {selectedLeave.days === 1 ? 'day' : 'days'}</span>
-                  </div>
-                  <div className="leave-detail-item">
-                    <span className="detail-label-leave">🕐 Applied On:</span>
-                    <span className="detail-value-leave">{selectedLeave.appliedOn}</span>
-                  </div>
-                  <div className="leave-detail-item full-width">
-                    <span className="detail-label-leave">📝 Reason:</span>
-                    <span className="detail-value-leave">{selectedLeave.reason}</span>
-                  </div>
-                  {selectedLeave.documents && (
-                    <div className="leave-detail-item full-width">
-                      <span className="detail-label-leave">📎 Attached Documents:</span>
-                      <a href="#" className="document-link-modal">{selectedLeave.documents}</a>
-                    </div>
-                  )}
-                </div>
-              </div>
-
-              {selectedLeave.status === 'Pending' && (
-                <div className="attendance-modal-actions">
-                  <button
-                    className="modal-action-btn btn-approve-modal"
-                    onClick={() => handleApproveLeave(selectedLeave.id)}
-                  >
-                    ✅ Approve Leave
-                  </button>
-                  <button
-                    className="modal-action-btn btn-reject-modal"
-                    onClick={() => handleRejectLeave(selectedLeave.id)}
-                  >
-                    ❌ Reject Leave
-                  </button>
-                </div>
-              )}
-            </div>
-          </div>
-        </div>
-      )}
     </div>
   );
 };

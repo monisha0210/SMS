@@ -1,0 +1,120 @@
+:root {
+  /* ==========================================
+     PRIMARY PURPLE PALETTE - YOUR COLORS
+     ========================================== */
+  
+  /* Main Purple Shades - From Your Palette */
+  --purple-darkest: #463DDA;      /* Shade 1 - Darkest */
+  --purple-dark: #715CFF;          /* Shade 2 - Dark */
+  --purple-main: #987CFF;          /* Shade 3 - Main */
+  --purple-light: #BF9DFF;         /* Shade 4 - Light */
+  --purple-lightest: #E5BFFF;      /* Shade 5 - Lightest */
+  
+  /* Additional Complementary Shades */
+  --purple-ultra-dark: #3730A3;    /* Extra dark for headers */
+  --purple-ultra-light: #F3E8FF;   /* Extra light for backgrounds */
+  --purple-pale: #FAF5FF;          /* Very pale for subtle backgrounds */
+  
+  /* Gradient Variations */
+  --gradient-purple-primary: linear-gradient(135deg, #463DDA 0%, #715CFF 100%);
+  --gradient-purple-light: linear-gradient(135deg, #987CFF 0%, #BF9DFF 100%);
+  --gradient-purple-soft: linear-gradient(135deg, #BF9DFF 0%, #E5BFFF 100%);
+  --gradient-purple-full: linear-gradient(135deg, #463DDA 0%, #E5BFFF 100%);
+  
+  /* ==========================================
+     SEMANTIC COLORS - STATUS & ACTIONS
+     ========================================== */
+  
+  /* Success Colors (Green) */
+  --success-dark: #047857;
+  --success-main: #10b981;
+  --success-light: #34d399;
+  --success-bg: #d1fae5;
+  --success-bg-light: #ecfdf5;
+  --gradient-success: linear-gradient(135deg, #10b981 0%, #059669 100%);
+  
+  /* Danger Colors (Red) */
+  --danger-dark: #dc2626;
+  --danger-main: #ef4444;
+  --danger-light: #f87171;
+  --danger-bg: #fee2e2;
+  --danger-bg-light: #fef2f2;
+  --gradient-danger: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+  
+  /* Warning Colors (Orange) */
+  --warning-dark: #b45309;
+  --warning-main: #f59e0b;
+  --warning-light: #fbbf24;
+  --warning-bg: #fef3c7;
+  --warning-bg-light: #fffbeb;
+  --gradient-warning: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+  
+  /* Info Colors (Blue) */
+  --info-dark: #1d4ed8;
+  --info-main: #3b82f6;
+  --info-light: #60a5fa;
+  --info-bg: #dbeafe;
+  --info-bg-light: #eff6ff;
+  --gradient-info: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+  
+  /* ==========================================
+     NEUTRAL COLORS - GRAYS
+     ========================================== */
+  
+  --gray-50: #f9fafb;
+  --gray-100: #f3f4f6;
+  --gray-200: #e5e7eb;
+  --gray-300: #d1d5db;
+  --gray-400: #9ca3af;
+  --gray-500: #6b7280;
+  --gray-600: #4b5563;
+  --gray-700: #374151;
+  --gray-800: #1f2937;
+  --gray-900: #111827;
+  
+  /* ==========================================
+     TEXT COLORS
+     ========================================== */
+  
+  --text-primary: #1f2937;
+  --text-secondary: #6b7280;
+  --text-tertiary: #9ca3af;
+  --text-white: #ffffff;
+  --text-purple: #463DDA;
+  --text-purple-light: #715CFF;
+  --text-disabled: #d1d5db;
+  
+  /* ==========================================
+     BACKGROUND COLORS
+     ========================================== */
+  
+  --bg-primary: #ffffff;
+  --bg-secondary: #f9fafb;
+  --bg-tertiary: #f3f4f6;
+  --bg-purple: #F3E8FF;
+  --bg-purple-light: #FAF5FF;
+  --bg-dark: #1f2937;
+  --bg-overlay: rgba(70, 61, 218, 0.1);
+  --bg-overlay-dark: rgba(0, 0, 0, 0.5);
+  
+  /* ==========================================
+     BORDER COLORS
+     ========================================== */
+  
+  --border-light: #f3f4f6;
+  --border-medium: #e5e7eb;
+  --border-dark: #d1d5db;
+  --border-purple: #987CFF;
+  --border-purple-light: #BF9DFF;
+  
+  /* ==========================================
+     SHADOW STYLES
+     ========================================== */
+  
+  --shadow-sm: 0 2px 8px rgba(70, 61, 218, 0.08);
+  --shadow-md: 0 4px 12px rgba(70, 61, 218, 0.1);
+  --shadow-lg: 0 8px 24px rgba(70, 61, 218, 0.12);
+  --shadow-xl: 0 20px 60px rgba(70, 61, 218, 0.2);
+  --shadow-purple: 0 4px 12px rgba(70, 61, 218, 0.4);
+  --shadow-purple-lg: 0 8px 24px rgba(70, 61, 218, 0.3);
+}
